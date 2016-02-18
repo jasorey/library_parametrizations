@@ -40,8 +40,23 @@ class observ:
 
 
 class lib_read:
-    /* Reads the files with the parametrization and correlations/covariances*/
+    """Reads the files with the parametrization and correlations/covariance"""
+    def __init__(self, file_name, info={}, root= '/', only_open=False):
+        """Initializes the input of data."""
+        """It uses the file_name and then root sets where
+        """in the HDF5 hierarchy everything lies
+        
+ 
+        self._info = info 
+        file_name = os.path.expanduser(file_name)
 
+        assert file_name, 'No package file specified.'
+        self.h5file = tables.openFile(file_name,mode='r+' title = 'Parametrizations',
+                                      rootUEP=root)
+
+        self.init_read()
+
+            
     def read_meta(self,out_path,objdict):
         self._fb = tables.openFile(out_path, 'w')
         self._fb.createGroup('/', 'meta')
@@ -63,7 +78,11 @@ class lib_read:
             h5setattr(meta_parametrization, 'z_mean', parametrization['z_mean'])
             h5setattr(meta_parametrization, 'z_width', parametrization['z_width'])
 
+    def init_read(self):
 
+        parametrization = self.read
+
+        
             
 class lib_write:
     
